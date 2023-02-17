@@ -1,6 +1,7 @@
 spring:
   main:
     banner-mode: "off"
+    allow-circular-references: true
   server:
     port: 8080
   #数据库配置 spring:
@@ -10,13 +11,27 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   #mybatis
+  mybatis:
   #mybatis自身的一些配置，例如基本类型的别名
-  mybatis.config-location: classpath:mybatis/mybatis-config.xml
   #指定mapper文件夹的位置
-  mybatis.mapper-locations: classpath:mybatis/mapper/*Mapper.xml
+  mapper-locations: classpath:com/demo/mapper/*.xml
   type-aliases-package: com.example.entity
   # 驼峰命名规范 如：数据库字段是  order_id 那么 实体字段就要写成 orderId
   configuration.map-underscore-to-camel-case: true
+
+  # 通用mapper配置
+  mapper:
+    mappers: tk.mybatis.mapper.common.Mapper
+    not-empty: false
+    # 主键自增回写，默认为 MYSQL
+    identity: MYSQL
+  # 分页插件配置
+  pagehelper:
+    helper-dialect: mysql
+    reasonable: true
+    support-methods-arguments: true
+    params: count=countSql
+
 book:
   author:
     name: wusx
